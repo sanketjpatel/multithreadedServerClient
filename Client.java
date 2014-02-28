@@ -1,4 +1,4 @@
-package MultithreadedServerClient;
+package MultiThreadedServerClient;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -36,7 +36,7 @@ public class Client {
             socket = new SocketStream(
                     InetAddress.getByName(hostName), Integer.parseInt(portNum));
         } catch (IOException e) {
-            System.err.println("Server is busy. Try again after some time or connect to a different server.");
+            System.err.println("Couldn't get I/O for the connection to the host ");
         }
 
         if (socket != null) {
@@ -45,7 +45,15 @@ public class Client {
                 boolean done = false;
                 String echo;
                 
-                System.out.println(socket.receiveMessage());
+                String initialMsg = socket.receiveMessage();
+                if(initialMsg.equals("Server too busy. Try later.")) {
+                    System.out.println(initialMsg);
+                    socket.close();
+                    return;
+                }
+                
+                System.out.println(initialMsg);
+                
                 String name = br.readLine();
                 socket.sendMessage(name);
                         
@@ -158,4 +166,3 @@ public class Client {
 
     } // end main
 } // end class
-
