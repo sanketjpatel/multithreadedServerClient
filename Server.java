@@ -1,4 +1,4 @@
-package MultithreadedServerClient;
+package MultiThreadedServerClient;
 
 import java.io.*;
 import java.net.*;
@@ -50,7 +50,7 @@ public class Server {
                 System.out.println("Waiting for a connection..");
                 clientSocket = new SocketStream(serverSocket.accept());
                 //clientSocket = serverSocket.accept();
-                
+                //System.out.println("Connection accepted..");
                 
                 //boolean done = false;
 
@@ -74,7 +74,7 @@ public class Server {
                 if (i == maxClients) {
                     //DataOutputStream os = new DataOutputStream(clientSocket.output);
                     //os.writeChars("Server too busy. Try later.");
-                    System.out.println("Server too busy. A connection has been rejected.");
+                    clientSocket.sendMessage("Server too busy. Try later.");
                     //os.close();
                     clientSocket.close();
                 }
